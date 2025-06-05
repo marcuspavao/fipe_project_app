@@ -1,32 +1,34 @@
 <template>
-  <div class="search-container">
-    <div class="search-card">
-      <div class="form-group">
-        <label for="tabela-select"><i class="fas fa-calendar-alt"></i> Ano de Referência:</label>
-        <select id="tabela-select" class="form-control" v-model="selectedTabela" @change="onTabelaChange" :disabled="loadingTabelas">
-          <option value="">Selecione a tabela</option>
-          <option v-for="tabela in tabelas" :key="tabela.codigo" :value="tabela.codigo">
-            {{ formatarPeriodoParaExibicao(tabela.mes) }}
-          </option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="marca-select"><i class="fas fa-trademark"></i> Marca:</label>
-        <select id="marca-select" class="form-control" v-model="selectedMarca" @change="onMarcaChange" :disabled="!selectedTabela || loadingMarcas">
-          <option value="">Selecione uma marca</option>
-          <option v-for="marca in marcas" :key="marca.brandCode" :value="marca.brandCode">
-            {{ marca.brandName }}
-          </option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="modelo-select"><i class="fas fa-car-side"></i> Modelo:</label>
-        <select id="modelo-select" class="form-control" v-model="selectedModelo" @change="onModeloChange" :disabled="!selectedMarca || loadingModelos">
-          <option value="">Selecione um modelo</option>
-          <option v-for="modelo in modelos" :key="modelo.modelCode" :value="modelo.modelCode">
-            {{ modelo.modelName }}
-          </option>
-        </select>
+  <div class="search-container card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label for="tabela-select" class="form-label"><i class="fas fa-calendar-alt"></i> Ano de Referência:</label>
+          <select id="tabela-select" class="form-select" v-model="selectedTabela" @change="onTabelaChange" :disabled="loadingTabelas">
+            <option value="">Selecione a tabela</option>
+            <option v-for="tabela in tabelas" :key="tabela.codigo" :value="tabela.codigo">
+              {{ formatarPeriodoParaExibicao(tabela.mes) }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="marca-select" class="form-label"><i class="fas fa-trademark"></i> Marca:</label>
+          <select id="marca-select" class="form-select" v-model="selectedMarca" @change="onMarcaChange" :disabled="!selectedTabela || loadingMarcas">
+            <option value="">Selecione uma marca</option>
+            <option v-for="marca in marcas" :key="marca.brandCode" :value="marca.brandCode">
+              {{ marca.brandName }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="modelo-select" class="form-label"><i class="fas fa-car-side"></i> Modelo:</label>
+          <select id="modelo-select" class="form-select" v-model="selectedModelo" @change="onModeloChange" :disabled="!selectedMarca || loadingModelos">
+            <option value="">Selecione um modelo</option>
+            <option v-for="modelo in modelos" :key="modelo.modelCode" :value="modelo.modelCode">
+              {{ modelo.modelName }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -128,49 +130,13 @@ function onModeloChange() {
 
 <style scoped>
 .search-container {
-  margin-bottom: 30px;
+  /* Removed specific styling, relying on Bootstrap card and utilities */
 }
 
-.search-card {
-  background-color: #fff; /* Assuming var(--white) is #fff */
-  border-radius: 8px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Assuming var(--shadow) */
+.form-label i {
+  margin-right: 0.5rem;
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #2980b9; /* Assuming var(--secondary-color) */
-}
-
-.form-group i {
-  margin-right: 8px;
-  color: #3498db; /* Assuming var(--primary-color) */
-}
-
-.form-control {
-  width: 100%; /* Changed from 50% to be more responsive by default */
-  padding: 12px;
-  border: 1px solid #e0e0e0; /* Assuming var(--medium-gray) */
-  border-radius: 4px;
-  font-size: 16px;
-  transition: all 0.3s ease; /* Assuming var(--transition) */
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #3498db; /* Assuming var(--primary-color) */
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
-}
-
-.form-control:disabled {
-  background-color: #f5f5f5; /* Assuming var(--light-gray) */
-  cursor: not-allowed;
-}
+/* Custom styles can be kept if Bootstrap defaults are not sufficient,
+   but try to use Bootstrap classes as much as possible. */
 </style>

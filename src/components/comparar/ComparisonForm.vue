@@ -1,46 +1,53 @@
 <template>
-  <div class="comparison-container search-card"> <!-- Reusing search-card for similar styling -->
-    <div class="form-group">
-      <label for="tabela1-select"><i class="fas fa-calendar-alt"></i> Primeiro Período:</label>
-      <select id="tabela1-select" class="form-control" v-model="selectedTabela1" @change="onTabela1Change" :disabled="loadingTabelas">
-        <option value="">Selecione o primeiro período</option>
-        <option v-for="tabela in tabelas" :key="tabela.codigo" :value="tabela.codigo">
-          {{ formatarPeriodoParaExibicao(tabela.mes) }}
-        </option>
-      </select>
-    </div>
+  <div class="comparison-form card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="tabela1-select" class="form-label"><i class="fas fa-calendar-alt"></i> Primeiro Período:</label>
+          <select id="tabela1-select" class="form-select" v-model="selectedTabela1" @change="onTabela1Change" :disabled="loadingTabelas">
+            <option value="">Selecione o primeiro período</option>
+            <option v-for="tabela in tabelas" :key="tabela.codigo" :value="tabela.codigo">
+              {{ formatarPeriodoParaExibicao(tabela.mes) }}
+            </option>
+          </select>
+        </div>
 
-    <div class="form-group">
-      <label for="tabela2-select"><i class="fas fa-calendar-alt"></i> Segundo Período:</label>
-      <select id="tabela2-select" class="form-control" v-model="selectedTabela2" @change="onTabela2Change" :disabled="loadingTabelas">
-        <option value="">Selecione o segundo período</option>
-        <option v-for="tabela in tabelas" :key="tabela.codigo" :value="tabela.codigo">
-          {{ formatarPeriodoParaExibicao(tabela.mes) }}
-        </option>
-      </select>
-    </div>
+        <div class="col-md-6">
+          <label for="tabela2-select" class="form-label"><i class="fas fa-calendar-alt"></i> Segundo Período:</label>
+          <select id="tabela2-select" class="form-select" v-model="selectedTabela2" @change="onTabela2Change" :disabled="loadingTabelas">
+            <option value="">Selecione o segundo período</option>
+            <option v-for="tabela in tabelas" :key="tabela.codigo" :value="tabela.codigo">
+              {{ formatarPeriodoParaExibicao(tabela.mes) }}
+            </option>
+          </select>
+        </div>
 
-    <div class="form-group">
-      <label for="marca-select-compare"><i class="fas fa-trademark"></i> Marca:</label>
-      <select id="marca-select-compare" class="form-control" v-model="selectedMarca" @change="onMarcaChange" :disabled="!marcaSelectEnabled || loadingMarcas">
-        <option value="">Selecione uma marca</option>
-        <option v-for="marca in marcas" :key="marca.brandCode" :value="marca.brandCode">
-          {{ marca.brandName }}
-        </option>
-      </select>
-    </div>
+        <div class="col-md-6">
+          <label for="marca-select-compare" class="form-label"><i class="fas fa-trademark"></i> Marca:</label>
+          <select id="marca-select-compare" class="form-select" v-model="selectedMarca" @change="onMarcaChange" :disabled="!marcaSelectEnabled || loadingMarcas">
+            <option value="">Selecione uma marca</option>
+            <option v-for="marca in marcas" :key="marca.brandCode" :value="marca.brandCode">
+              {{ marca.brandName }}
+            </option>
+          </select>
+        </div>
 
-    <div class="form-group">
-      <label for="modelo-select-compare"><i class="fas fa-car-side"></i> Modelo:</label>
-      <select id="modelo-select-compare" class="form-control" v-model="selectedModelo" :disabled="!modeloSelectEnabled || loadingModelos">
-        <option value="">Selecione um modelo</option>
-        <option v-for="modelo in modelos" :key="modelo.modelCode" :value="modelo.modelCode">
-          {{ modelo.modelName }}
-        </option>
-      </select>
+        <div class="col-md-6">
+          <label for="modelo-select-compare" class="form-label"><i class="fas fa-car-side"></i> Modelo:</label>
+          <select id="modelo-select-compare" class="form-select" v-model="selectedModelo" :disabled="!modeloSelectEnabled || loadingModelos">
+            <option value="">Selecione um modelo</option>
+            <option v-for="modelo in modelos" :key="modelo.modelCode" :value="modelo.modelCode">
+              {{ modelo.modelName }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="d-grid mt-3">
+        <button @click="onCompare" :disabled="!compareButtonEnabled" class="btn btn-primary btn-lg">
+          <i class="fas fa-exchange-alt me-2"></i>Comparar Valores
+        </button>
+      </div>
     </div>
-
-    <button @click="onCompare" :disabled="!compareButtonEnabled" class="compareButton">Comparar Valores</button>
   </div>
 </template>
 
@@ -170,69 +177,9 @@ function onCompare() {
 </script>
 
 <style scoped>
-/* Styles from SearchForm.vue are largely reused via search-card class */
-/* .comparison-container is now merged with .search-card styling */
-
-.form-group {
-  margin-bottom: 20px;
+.form-label i {
+  margin-right: 0.5rem;
 }
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #2980b9; /* var(--secondary-color) */
-}
-
-.form-group i {
-  margin-right: 8px;
-  color: #3498db; /* var(--primary-color) */
-}
-
-.form-control {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #e0e0e0; /* var(--medium-gray) */
-  border-radius: 4px;
-  font-size: 16px;
-  transition: all 0.3s ease; /* var(--transition) */
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #3498db; /* var(--primary-color) */
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
-}
-
-.form-control:disabled {
-  background-color: #f5f5f5; /* var(--light-gray) */
-  cursor: not-allowed;
-}
-
-.compareButton {
-  background-color: #27ae60; /* A green color for emphasis, distinct from primary */
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px; /* Added some margin for spacing */
-  transition: all 0.3s ease;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Make button full width */
-}
-
-.compareButton:hover {
-  background-color: #2ecc71; /* Lighter green on hover */
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.compareButton:disabled {
-  background-color: #95a5a6; /* Muted color when disabled */
-  cursor: not-allowed;
-  box-shadow: none;
-}
+/* Removed custom styles for .compareButton as Bootstrap btn classes are now used */
+/* Other custom styles related to form elements can be removed if Bootstrap defaults are sufficient */
 </style>

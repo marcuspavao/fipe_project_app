@@ -1,15 +1,22 @@
 <template>
-  <div>
-    HI THERE
-    <ComparisonForm @compare="handleCompare" @loading="handleFormLoading" @error="handleError" />
-    <ComparisonResults 
-      :comparisonData="results" 
-      :modeloNome="modeloNome" 
-      :refPeriodo1Display="refPeriodo1Display" 
-      :refPeriodo2Display="refPeriodo2Display" 
-      :loading="loading" 
-      :error="error"
-      :initialPrompt="initialLoad" />
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <ComparisonForm @compare="handleCompare" @loading="handleFormLoading" @error="handleError" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <ComparisonResults
+          :comparisonData="results"
+          :modeloNome="modeloNome"
+          :refPeriodo1Display="refPeriodo1Display"
+          :refPeriodo2Display="refPeriodo2Display"
+          :loading="loading"
+          :error="error"
+          :initialPrompt="initialLoad" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,7 +30,8 @@ const results = ref([]);
 const modeloNome = ref('');
 const refPeriodo1Display = ref('');
 const refPeriodo2Display = ref('');
-const loading = ref(false);
+const loading = ref(false); // For the main comparison data fetching
+const formLoading = ref(false); // For ComparisonForm's internal loading (marcas, modelos)
 const error = ref('');
 const initialLoad = ref(true); // To show initial prompt in Results
 
@@ -33,7 +41,7 @@ async function handleCompare(payload) {
   loading.value = true;
   error.value = '';
   results.value = [];
-  initialLoad.value = false; // Comparison has been attempted
+  initialLoad.value = false;
 
   modeloNome.value = mNome;
   refPeriodo1Display.value = rP1;
@@ -45,7 +53,6 @@ async function handleCompare(payload) {
       getVeiculos(tabela2, modelo)
     ]);
 
-    // Process and merge results
     const processedResults = [];
     const veiculosT2Map = new Map(veiculosT2.map(v => [v.year, v]));
 
@@ -54,33 +61,18 @@ async function handleCompare(payload) {
       processedResults.push({
         year: v1.year,
         price1: v1.price,
-        price2: v2 ? v2.price : 'N/A', // Handle if vehicle year doesn't exist in second period
+        price2: v2 ? v2.price : 'N/A',
       });
-      // Remove from map to handle vehicles in T2 not in T1 later if needed, though current logic prioritizes T1 years
       if (v2) veiculosT2Map.delete(v1.year); 
     }
     
-    // Optional: Add vehicles only present in T2 (if business logic requires)
-    // for (const v2 of veiculosT2Map.values()) {
-    //   processedResults.push({
-    //     year: v2.year,
-    //     price1: 'N/A',
-    //     price2: v2.price,
-    //   });
-    // }
-    // Sort results by year, e.g., numerically. Year "32000" (0km) should probably come first or last.
     processedResults.sort((a, b) => {
         const yearA = a.year === "32000" ? 0 : parseInt(a.year);
         const yearB = b.year === "32000" ? 0 : parseInt(b.year);
         return yearA - yearB;
     });
 
-
     results.value = processedResults;
-    if (processedResults.length === 0) {
-        // error.value = "Nenhum veículo encontrado para os critérios selecionados em ambos os períodos."
-        // This case is handled by ComparisonResults component's "Nenhuma comparação disponível..." message
-    }
 
   } catch (err) {
     console.error(err);
@@ -91,29 +83,36 @@ async function handleCompare(payload) {
   }
 }
 
-// This loading event comes from ComparisonForm when it's fetching Marcas or Modelos.
 function handleFormLoading(isLoading) {
+  formLoading.value = isLoading;
+  // If the form starts loading its dependencies, reset the results and error states.
   if (isLoading) {
-    // If the form starts loading its dependencies, we are effectively resetting the state.
     results.value = [];
     error.value = '';
     initialLoad.value = true; 
-    // We don't set loading.value = true here, as that's for the main comparison action.
-    // The form itself will show its disabled state for selects.
+    // The ComparisonResults component will show its own loading spinner via the `loading` prop
+    // if we set `loading.value = true` here. We can decide if that's desired.
+    // For now, let's make the main loading spinner active when the form is loading its dependencies.
+    loading.value = true;
+  } else {
+    // When form is done loading its dependencies, if no comparison has been triggered yet,
+    // set the main loading to false.
+     if (initialLoad.value) {
+        loading.value = false;
+     }
   }
-  // When form loading finishes, no specific action needed here unless
-  // we want to explicitly stop a global page loader if one was activated.
 }
 
 function handleError(errorMessage) {
   error.value = errorMessage;
   results.value = [];
   loading.value = false;
-  initialLoad.value = false; // Error occurred, so not initial state anymore
+  formLoading.value = false; // Reset form loading state as well
+  initialLoad.value = false;
 }
 
 </script>
 
 <style scoped>
-/* No specific styles for CompararValoresView for now */
+/* Using Bootstrap container and row/col, so specific styles might not be needed here. */
 </style>
