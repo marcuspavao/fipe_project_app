@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand fs-4" href="#"><i class="fas fa-car" /> Consulta Tabela FIPE</a>
+        <a class="navbar-brand fs-4" href="#"><i class="fas fa-car" /></a>
         <button
           class="navbar-toggler"
           type="button"
