@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand fs-4" href="#"><i class="fas fa-car me-2"></i> Consulta Tabela FIPE</a>
+        <a class="navbar-brand fs-4" href="#"><i class="fas fa-car" /> Consulta Tabela FIPE</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -31,7 +31,7 @@
     </nav>
 
     <main class="container mt-4">
-      <slot></slot>
+      <router-view />
     </main>
 
     <footer class="bg-dark text-white text-center py-3 mt-4">
@@ -47,5 +47,4 @@
 </script>
 
 <style scoped>
-/* Basic styling for the layout can be added here if needed */
 </style>

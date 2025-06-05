@@ -1,91 +1,34 @@
-/* Import base styles (like normalize.css or Vite's base) */
-@import './base.css'; /* This likely includes a reset/normalize */
+@import './base.css';
 
-/* Global CSS Variables - Retain only if absolutely necessary for overriding Bootstrap or for non-Bootstrap elements */
-/* Most of these are likely superseded by Bootstrap's own variables or utility classes */
-/*
-:root {
-  --primary-color: #3498db; // Bootstrap has $primary
-  --secondary-color: #2980b9; // Bootstrap has $secondary
-  --accent-color: #e74c3c; // Consider using Bootstrap's $danger or $warning
-  --text-color: #333; // Bootstrap has $body-color
-  --light-gray: #f5f5f5; // Bootstrap has $gray-100, $light, etc.
-  --medium-gray: #e0e0e0; // Bootstrap has $gray-300, $gray-400
-  --dark-gray: #777; // Bootstrap has $gray-700, $dark
-  --white: #fff; // Bootstrap has $white
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Bootstrap has shadow utilities
-  --transition: all 0.3s ease; // Bootstrap has transition mixins/utilities
-
-  --text-color-nav-link: #ecf0f1; // Specific to old nav, Bootstrap navbar has its own variables
-  --text-color-nav-link-hover: #1abc9c; // Specific to old nav
+#app i.fas,
+#app i.fa-solid {
+  font-family: 'Font Awesome 6 Free', FontAwesome, sans-serif;
+  font-weight: 900;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
 }
-*/
 
-/* Universal box-sizing reset is typically handled by Bootstrap's Reboot.css and base.css */
-
-/* Body styles - Bootstrap's Reboot.css handles base body styling */
-/*
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--light-gray);
-  color: var(--text-color);
-  line-height: 1.6;
+#app i.fab,
+#app i.fa-brands {
+  font-family: 'Font Awesome 6 Brands', FontAwesome, sans-serif;
+  font-weight: 400;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
 }
-*/
 
-/* App container - Use Bootstrap containers in templates instead of styling #app directly for layout */
-/*
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0;
-  font-weight: normal;
+#app i.fas::before,
+#app i.fa-solid::before,
+#app i.fab::before,
+#app i.fa-brands::before {
+  font-family: inherit;
+  font-weight: inherit;
 }
-*/
-
-/* Global container - Bootstrap's .container or .container-fluid should be used */
-/*
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-}
-*/
-
-/* Header, Nav, Footer styles are removed as MainLayout.vue now uses Bootstrap navbar and classes */
-
-/* Global Animations - Define animations locally in components if needed, or use Bootstrap utilities */
-/*
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fade-in-result {
-  animation: fadeIn 0.5s ease-out;
-}
-*/
-
-/* Responsive adjustments for old layout are removed */
-/*
-@media (max-width: 768px) {
-  .container {
-    padding: 15px;
-  }
-  header {
-    padding: 15px;
-  }
-  header h1 {
-    font-size: 22px;
-  }
-  header .subtitle {
-    font-size: 14px;
-  }
-  nav a {
-    font-size: 16px;
-    margin: 0 5px;
-  }
-}
-*/
 
 /*
   Any remaining global styles should be minimal and carefully considered.
