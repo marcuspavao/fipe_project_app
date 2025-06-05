@@ -1,25 +1,46 @@
 <template>
-  <div class="result-container">
-    <div v-if="loading" class="vehicle-card">
-      <p>Carregando comparação...</p>
-    </div>
-    <div v-else-if="error" class="vehicle-card error-card">
-      <p>{{ error }}</p>
-    </div>
-    <div v-else-if="comparisonData && comparisonData.length > 0">
-      <h2>Comparação de Valores</h2>
-      <h3>{{ modeloNome }}</h3>
-      <div v-for="(item, index) in comparisonData" :key="index + '-' + item.year" class="vehicle-card">
-        <p class="year"><strong>Ano do Carro:</strong> {{ item.year === "32000" ? '0km' : item.year }}</p>
-        <p><strong>{{ refPeriodo1Display }}:</strong> {{ item.price1 ? item.price1.replace(/"/g, '') : 'N/A' }}</p>
-        <p><strong>{{ refPeriodo2Display }}:</strong> {{ item.price2 ? item.price2.replace(/"/g, '') : 'N/A' }}</p>
+  <div class="comparison-results mt-4">
+    <div v-if="loading" class="d-flex justify-content-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando comparação...</span>
       </div>
     </div>
-    <div v-else-if="!loading && !error && initialPrompt" class="vehicle-card">
-      <p>Por favor, selecione os períodos e o modelo para comparação.</p>
+
+    <div v-else-if="error" class="alert alert-danger" role="alert">
+      <i class="fas fa-exclamation-triangle me-2"></i>
+      {{ error }}
     </div>
-    <div v-else-if="!loading && !error && !initialPrompt && (!comparisonData || comparisonData.length === 0)" class="vehicle-card">
-      <p>Nenhuma comparação disponível para os períodos e modelo selecionados, ou dados insuficientes para comparar.</p>
+
+    <div v-else-if="comparisonData && comparisonData.length > 0">
+      <h2 class="mb-3 h4">Comparação de Valores: <span class="text-primary">{{ modeloNome }}</span></h2>
+      <div class="row">
+        <div v-for="(item, index) in comparisonData" :key="index + '-' + item.year" class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-header bg-secondary text-white">
+              <h5 class="card-title mb-0">Ano: {{ item.year === "32000" ? '0km' : item.year }}</h5>
+            </div>
+            <div class="card-body">
+              <dl class="row mb-0">
+                <dt class="col-sm-6">{{ refPeriodo1Display }}:</dt>
+                <dd class="col-sm-6 text-end">{{ item.price1 ? item.price1.replace(/"/g, '') : 'N/A' }}</dd>
+
+                <dt class="col-sm-6">{{ refPeriodo2Display }}:</dt>
+                <dd class="col-sm-6 text-end">{{ item.price2 ? item.price2.replace(/"/g, '') : 'N/A' }}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-else-if="!loading && !error && initialPrompt" class="alert alert-light text-center" role="alert">
+      <i class="fas fa-filter me-2"></i>
+      Por favor, selecione os períodos e o modelo para comparação.
+    </div>
+
+    <div v-else-if="!loading && !error && !initialPrompt && (!comparisonData || comparisonData.length === 0)" class="alert alert-info" role="alert">
+      <i class="fas fa-info-circle me-2"></i>
+      Nenhuma comparação disponível para os períodos e modelo selecionados, ou dados insuficientes para comparar.
     </div>
   </div>
 </template>
@@ -37,66 +58,14 @@ defineProps({
 </script>
 
 <style scoped>
-/* Styles from ResultsDisplay.vue will be largely reused. */
-.result-container {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  min-height: 100px;
-  margin-top: 30px;
-}
+/* Custom styles largely removed in favor of Bootstrap defaults. */
+/* Minor adjustments can be made here if necessary, but prefer Bootstrap utilities. */
 
-.result-container h2 {
-  color: #2c3e50;
-  margin-bottom: 5px;
-}
-.result-container h3 {
-  color: #3498db;
-  margin-bottom: 20px;
-  font-weight: normal;
-}
+/* Example: If card titles need specific adjustment not covered by Bootstrap heading classes */
+/* .card-title { font-size: 1.1rem; } */
 
-.vehicle-card {
-  border-left: 4px solid #27ae60; /* Green to distinguish from single FIPE consulta */
-  padding: 15px 20px;
-  margin-bottom: 15px;
-  background-color: #f5f5f5;
-  border-radius: 0 4px 4px 0;
-  transition: all 0.3s ease;
-}
-
-.vehicle-card.error-card {
-  border-left-color: #e74c3c; 
-  background-color: #fbecec; 
-  color: #e74c3c;
-}
-
-.vehicle-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-}
-
-.vehicle-card p {
-  margin-bottom: 8px; /* More compact spacing for comparison lines */
-}
-.vehicle-card p:last-child {
-  margin-bottom: 0;
-}
-
-.year { /* Re-styled from FipeConsulta for this context */
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: #333;
-  margin-bottom: 10px !important;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.result-container {
-  animation: fadeIn 0.5s ease-out;
-}
+/* Example: If definition list terms/details need specific styling */
+/* .card-body dl dt { font-weight: normal; color: #555; } */
+/* .card-body dl dd { font-weight: bold; } */
+/* Using Bootstrap text utilities (e.g., text-success, fw-bold) in the template is often preferred for dd styling. */
 </style>

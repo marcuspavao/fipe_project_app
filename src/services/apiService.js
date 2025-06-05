@@ -24,7 +24,6 @@ export async function getVeiculos(tabela, modelo) {
     return response.json();
 }
 
-// Helper function (can be moved to a utils file later if needed)
 export function formatarPeriodoParaExibicao(mesAnoString) {
     if (!mesAnoString || typeof mesAnoString !== 'string') {
         return 'Período inválido';

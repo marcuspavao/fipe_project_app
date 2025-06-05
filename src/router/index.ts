@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainLayout from '@/layouts/MainLayout.vue';
-import type { Component } from 'vue'
 import FipeConsultaView from '@/views/FipeConsultaView.vue'
 import CompararValoresView from '@/views/CompararValoresView.vue'
 import DashboardMarcasView from '@/views/DashboardMarcasView.vue'
@@ -13,7 +12,7 @@ const router = createRouter({
       component: MainLayout,
       children: [
         { 
-          path: '', // Matches the root path '/'
+          path: '/', // Matches the root path '/'
           name: 'fipe-consulta', 
           component: FipeConsultaView 
         }
