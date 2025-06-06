@@ -12,7 +12,7 @@
     </div>
 
     <div v-else-if="veiculos && veiculos.length > 0" class="card shadow-sm">
-      <div class="card-header bg-primary text-white">
+      <div class="card-header bg-dark text-white">
         <h2 class="h5 mb-0">Resultados da Consulta</h2>
       </div>
       <div class="card-body">

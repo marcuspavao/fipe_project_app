@@ -12,7 +12,7 @@ const router = createRouter({
       component: MainLayout,
       children: [
         { 
-          path: '/', // Matches the root path '/'
+          path: '/',
           name: 'fipe-consulta', 
           component: FipeConsultaView 
         }
@@ -23,7 +23,7 @@ const router = createRouter({
       component: MainLayout,
       children: [
         { 
-          path: '', // Matches '/comparar'
+          path: '',
           name: 'comparar-valores', 
           component: CompararValoresView 
         }
@@ -34,7 +34,7 @@ const router = createRouter({
       component: MainLayout,
       children: [
         { 
-          path: '', // Matches '/dashboard'
+          path: '',
           name: 'dashboard-marcas', 
           component: DashboardMarcasView 
         }
