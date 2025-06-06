@@ -2,8 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand fs-4" href="#"><i class="fas fa-car" /></a>
-        <button
+        <a class="navbar-brand fs-4" href="#"><img src="../../images/icon_white.png" alt="Ícone de Carro" height="50"></a>        <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -30,11 +29,11 @@
       </div>
     </nav>
 
-    <main class="container mt-4">
+    <main>
       <router-view />
     </main>
 
-    <footer class="bg-dark text-white text-center py-3 mt-4">
+    <footer class="bg-dark text-white text-center py-3">
       <div class="container">
         <p class="mb-0">Dados fornecidos pela Tabela FIPE &copy; 2025</p>
       </div>
@@ -43,7 +42,6 @@
 </template>
 
 <script setup>
-// No script needed for now
 </script>
 
 <style scoped>

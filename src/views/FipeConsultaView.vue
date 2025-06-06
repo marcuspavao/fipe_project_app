@@ -2,10 +2,10 @@
   <div class="fipe-view-container">
     <div class="content-overlay-layer"></div>
     <div class="main-content-wrapper container py-4">
-      <div class="header-section text-center mb-4">
-        <h1 class="display-5 fw-bold text-white mb-2">
-          <i class="fas fa-car-side me-2"></i>Consulta FIPE
-        </h1>
+      <div class="header-section text-center">
+        <h1 class="display-5 fw-bold text-white d-flex align-items-center justify-content-center">
+<a>Consulta FIPE</a>
+</h1>
         <p class="lead fs-5 text-white-75">
           Valores de referência de veículos no Brasil.
         </p>
@@ -17,7 +17,7 @@
               <SearchForm @modeloSelected="handleModeloSelected" @loading="handleSearchFormLoading"
                 @error="handleError" />
           </div>
-          <div class="row mt-4 mt-md-5">
+          <div class="row mt-md-4">
         <div class="col-12">
           <ResultsDisplay :veiculos="veiculos" :modeloNome="modeloNome" :loading="loadingResults" :error="error" />
         </div>
